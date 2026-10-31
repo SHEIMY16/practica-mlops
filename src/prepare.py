@@ -22,7 +22,8 @@ for col in df.columns.drop(target):
         if as_number.notna().mean() > 0.95:
             df[col] = as_number
 
-df = df.dropna()
+# df.dropna()
+df["cloud_cover"] = df["cloud_cover"].interpolate(method="linear").dropna()
 y = df[target]
 X = pd.get_dummies(df.drop(columns=[target]), drop_first=True, dtype=int)
 
@@ -34,4 +35,3 @@ out = Path("data/prepared")
 out.mkdir(parents=True, exist_ok=True)
 X_train.assign(**{target: y_train}).to_csv(out / "train.csv", index=False)
 X_test.assign(**{target: y_test}).to_csv(out / "test.csv", index=False)
-print(f"train: {len(X_train)} filas · test: {len(X_test)} filas · {X.shape[1]} columnas")
