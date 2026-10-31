@@ -1,0 +1,5 @@
+outs:
+- md5: 840f6359d7f583b60f4f808d3516018c
+  size: 2654864
+  hash: md5
+  path: weather_observation.csv

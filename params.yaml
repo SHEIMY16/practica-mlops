@@ -1,8 +1,12 @@
 prepare:
-  target: Churn                # columna que se quiere predecir
+  target: air_temperature_2m                # columna que se quiere predecir
   drop_columns: [customerID]   # identificadores o columnas que no aportan
   test_size: 0.2
   random_state: 42
+  # pivot params
+  index: observed_at
+  columns: variable
+  values: value
 
 train:
   n_estimators: 100
