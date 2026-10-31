@@ -19,4 +19,3 @@ metrics = {
     "mae": round(mean_absolute_error(y, pred), 4)
 }
 Path("metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
-print(metrics)
