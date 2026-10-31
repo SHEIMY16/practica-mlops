@@ -1,0 +1,73 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/raw/weather_observation.csv
+      hash: md5
+      md5: 840f6359d7f583b60f4f808d3516018c
+      size: 2654864
+    - path: src/prepare.py
+      hash: md5
+      md5: 9091a6f4e7b2a0382f774c3647f7e006
+      size: 1498
+    params:
+      params.yaml:
+        prepare:
+          target: air_temperature_2m
+          drop_columns:
+          - customerID
+          test_size: 0.2
+          random_state: 42
+          index: observed_at
+          columns: variable
+          values: value
+    outs:
+    - path: data/prepared
+      hash: md5
+      md5: 8fdce970ac98a612bec810d44390ccb7.dir
+      size: 684
+      nfiles: 2
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/prepared
+      hash: md5
+      md5: 8fdce970ac98a612bec810d44390ccb7.dir
+      size: 684
+      nfiles: 2
+    - path: src/train.py
+      hash: md5
+      md5: 852e7907bdd0fe6390c96ed416092287
+      size: 729
+    params:
+      params.yaml:
+        train:
+          n_estimators: 100
+          max_depth: 5
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: d0b317679935ebac9057db3a8f67037d
+      size: 94489
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/prepared
+      hash: md5
+      md5: 8fdce970ac98a612bec810d44390ccb7.dir
+      size: 684
+      nfiles: 2
+    - path: models/model.pkl
+      hash: md5
+      md5: d0b317679935ebac9057db3a8f67037d
+      size: 94489
+    - path: src/evaluate.py
+      hash: md5
+      md5: 7783f305ff398367ebf3038438385537
+      size: 698
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 686a82f5584198ca3a0e6a38b1ddb849
+      size: 43
