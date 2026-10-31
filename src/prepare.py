@@ -14,6 +14,7 @@ def pget(key, default=None):
 df = pd.read_csv("data/raw/weather_observation.csv")
 df = df.pivot(index=pget("index", "observed_at"), values=pget("values", "value"), columns=pget("variables", "variable"))
 df = df.drop(columns=params.get("drop_columns") or [], errors="ignore")
+print("shape: " + str(df.shape))
 
 # Columnas de texto que en realidad son números (por ejemplo, TotalCharges en Telco)
 for col in df.columns.drop(target):
@@ -22,7 +23,8 @@ for col in df.columns.drop(target):
         if as_number.notna().mean() > 0.95:
             df[col] = as_number
 
-df = df.dropna()
+# df.dropna()
+df["cloud_cover"] = df["cloud_cover"].interpolate(method="linear").dropna()
 y = df[target]
 X = pd.get_dummies(df.drop(columns=[target]), drop_first=True, dtype=int)
 
