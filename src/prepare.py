@@ -14,7 +14,6 @@ def pget(key, default=None):
 df = pd.read_csv("data/raw/weather_observation.csv")
 df = df.pivot(index=pget("index", "observed_at"), values=pget("values", "value"), columns=pget("variables", "variable"))
 df = df.drop(columns=params.get("drop_columns") or [], errors="ignore")
-print("shape: " + str(df.shape))
 
 # Columnas de texto que en realidad son números (por ejemplo, TotalCharges en Telco)
 for col in df.columns.drop(target):
@@ -36,4 +35,3 @@ out = Path("data/prepared")
 out.mkdir(parents=True, exist_ok=True)
 X_train.assign(**{target: y_train}).to_csv(out / "train.csv", index=False)
 X_test.assign(**{target: y_test}).to_csv(out / "test.csv", index=False)
-print(f"train: {len(X_train)} filas · test: {len(X_test)} filas · {X.shape[1]} columnas")
