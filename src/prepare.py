@@ -6,9 +6,13 @@ import yaml
 from sklearn.model_selection import train_test_split
 
 params = yaml.safe_load(open("params.yaml", encoding="utf-8"))["prepare"]
-target = params["target"]
+target = params["target"] 
 
-df = pd.read_csv("data/raw/dataset.csv")
+def pget(key, default=None):
+    return params.get(key, default)
+
+df = pd.read_csv("data/raw/weather_observation.csv")
+df = df.pivot(index=pget("index", "observed_at"), values=pget("values", "value"), columns=pget("variables", "variable"))
 df = df.drop(columns=params.get("drop_columns") or [], errors="ignore")
 
 # Columnas de texto que en realidad son números (por ejemplo, TotalCharges en Telco)
