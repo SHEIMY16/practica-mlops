@@ -1,9 +1,12 @@
 <!-- PR de trabajo (feat/, fix/, exp/, docs/ hacia entrega/eN): borren esta plantilla y escriban en una o dos líneas qué cambia. -->
 <!-- PR de entrega (entrega/eN hacia master): completen la plantilla. -->
 
-## Entrega [E1] · [nombre del equipo]
+## Entrega [X] · PCA
 
-Integrantes presentes: [nombres]
+Integrantes presentes:
+- Camilo Benavides
+- Sheimy Lozano
+- Rafael Mendoza
 
 ### Checklist mínimo
 <!-- Este es el del E1. Para otro hito, reemplácenlo por el de docs/entregas.md -->
