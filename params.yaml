@@ -1,8 +1,8 @@
 prepare:
   target: air_temperature_2m                # columna que se quiere predecir
-  drop_columns: [customerID]   # identificadores o columnas que no aportan
+  drop_columns: [wind_gust_10m]   # identificadores o columnas que no aportan
   test_size: 0.2
-  random_state: 42
+  random_state: 16
   # pivot params
   index: observed_at
   columns: variable
